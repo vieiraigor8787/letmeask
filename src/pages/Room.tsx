@@ -1,5 +1,5 @@
-import { FormEvent, useState } from "react";
-import { useParams } from "react-router-dom";
+import { FormEvent, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
 import { Button } from "../components/Button";
 import { RoomCode } from "./../components/RoomCode";
@@ -25,6 +25,18 @@ export function Room() {
   const roomId = params.id;
 
   const { title, questions } = useRoom(roomId);
+
+  const history = useHistory();
+  
+  useEffect(() => {
+    const roomRef = database.ref(`romms/${roomId}`);
+    
+    roomRef.get().then(room => {
+      if (room.val().endedAt) {
+        history.push("/");
+      }
+    })
+  }, [history, roomId])
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
