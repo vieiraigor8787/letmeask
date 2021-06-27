@@ -3,7 +3,7 @@
   justify-content: space-evenly;
 
   p {
-    color: #29292e;
+    color: #fff;
   }
 
   span {
@@ -18,9 +18,13 @@
   button {
     border: none;
     padding: 6px;
-    background: #835afd;
-    color: #fff;
+    background: #fff;
+    color: #835afd;
     cursor: pointer;
     border-radius: 8px;
+
+    &:hover {
+      background: #ccc;
+    }
   }
 }

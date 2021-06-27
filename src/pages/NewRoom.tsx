@@ -7,12 +7,14 @@ import logoImg from "../assets/images/logo.svg";
 import { Button } from "../components/Button";
 import { database } from '../services/firebase';
 import { useAuth } from './../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
 
 import '../styles/auth.scss';
 
 export function NewRoom() {
-  const { user } = useAuth()
-  const history = useHistory()
+  const { user } = useAuth();
+  const history = useHistory();
+  const { theme } = useTheme();
 
   const [newRoom, setNewRoom] = useState('');
 
@@ -35,7 +37,7 @@ export function NewRoom() {
   }
 
   return (
-    <div id="page-auth">
+    <div id="page-auth" className={theme}>
       <aside>
         <img
           src={illustrationImg}

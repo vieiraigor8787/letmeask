@@ -7,15 +7,19 @@ import googleIconImg from "../assets/images/google-icon.svg";
 
 import { Button } from "../components/Button";
 
-import { useAuth } from './../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
+
+import { database } from '../services/firebase';
 
 import '../styles/auth.scss';
-import { database } from '../services/firebase';
 
 
 export function Home() {
   const history = useHistory();
   const { user, signInWithGoogle } = useAuth();
+
+  const { theme, toggleTheme } = useTheme()
   const [roomCode, setRoomCode] = useState('');
 
   async function handleCreateRoom() {
@@ -49,7 +53,7 @@ export function Home() {
   }
 
   return (
-    <div id="page-auth">
+    <div id="page-auth" className={theme}>
       <aside>
         <img
           src={illustrationImg}
@@ -60,6 +64,7 @@ export function Home() {
       </aside>
       <main>
         <div className="main-content">
+          <button onClick={toggleTheme}></button>
           <img src={logoImg} alt="Letmeask" />
           <button onClick={handleCreateRoom} className="create-room">
             <img src={googleIconImg} alt="" />

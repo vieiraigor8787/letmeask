@@ -8,6 +8,7 @@ import { Question } from "../components/Question";
 
 // import { useAuth } from "../hooks/useAuth";
 import { useRoom } from "../hooks/useRoom";
+import { useTheme } from "../hooks/useTheme";
 
 import { database } from "../services/firebase";
 
@@ -34,15 +35,16 @@ export function AdminRoom() {
       height: "150px",
       transform: "translate(-40%, -10%)",
       display: "flex",
-      background: "#e5cfe8",
+      background: "#835afd",
       padding: "30px",
-      border: "2px solid #835afd",
+      borderRadius: '8px'
     },
   };
   // const { user } = useAuth();
   const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
+  const { theme, toggleTheme } = useTheme()
 
   const [isQuestionIdModalOpen, setIsQuestionIdModalOpen] = useState<string | undefined>();
 
@@ -75,12 +77,13 @@ export function AdminRoom() {
   }
 
   return (
-    <div id="page-room">
+    <div id="page-room" className={theme}>
       <header>
         <div className="content">
           <img src={logoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
+            <button onClick={toggleTheme}></button>
             <Button isOutlined onClick={() => setIsEndRoom(roomId)}>
               Encerrar sala
             </Button>
