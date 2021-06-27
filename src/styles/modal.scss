@@ -1,0 +1,26 @@
+.ReactModal__Content--after-open {
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  p {
+    color: #29292e;
+  }
+
+  span {
+    position: absolute;
+    color: #835afd;
+    top: 5%;
+    right: 5%;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  button {
+    border: none;
+    padding: 6px;
+    background: #835afd;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+}

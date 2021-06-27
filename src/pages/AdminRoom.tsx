@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-
 import Modal from "react-modal";
 
 import { Button } from "../components/Button";
@@ -18,18 +17,36 @@ import checkImg from "../assets/images/check.svg";
 import answerImg from "../assets/images/answer.svg";
 
 import "../styles/room.scss";
+import "../styles/modal.scss";
 
 type RoomParams = {
   id: string;
 };
 
 export function AdminRoom() {
+  const customStyles = {
+    content: {
+      top: "35%",
+      left: "45%",
+      right: "auto",
+      bottom: "auto",
+      width: "400px",
+      height: "150px",
+      transform: "translate(-40%, -10%)",
+      display: "flex",
+      background: "#e5cfe8",
+      padding: "30px",
+      border: "2px solid #835afd",
+    },
+  };
   // const { user } = useAuth();
   const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
 
   const [isQuestionIdModalOpen, setIsQuestionIdModalOpen] = useState<string | undefined>();
+
+  const [isEndRoom, setIsEndRoom] = useState<string | undefined>();
 
   const { title, questions } = useRoom(roomId);
 
@@ -64,9 +81,18 @@ export function AdminRoom() {
           <img src={logoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleEndRoom}>
+            <Button isOutlined onClick={() => setIsEndRoom(roomId)}>
               Encerrar sala
             </Button>
+            <Modal
+              isOpen={isEndRoom === roomId}
+              onRequestClose={() => setIsEndRoom(undefined)}
+              style={customStyles}
+            >
+              <p>Tem certeza que quer encerrar esta sala?</p>
+              <span onClick={() => setIsEndRoom(undefined)}>x</span>
+              <button onClick={() => handleEndRoom()}>Encerrar</button>
+            </Modal>
           </div>
         </div>
       </header>
@@ -117,16 +143,16 @@ export function AdminRoom() {
                   </button>
                 </Question>
                 <Modal
+                  style={customStyles}
                   isOpen={isQuestionIdModalOpen === question.id}
                   onRequestClose={() => setIsQuestionIdModalOpen(undefined)}
-
                 >
-                  <p>Tem certeza que deseja excluir esta pergunta?</p> 
+                  <p>Tem certeza que deseja excluir esta pergunta?</p>
+                  <span onClick={() => setIsQuestionIdModalOpen(undefined)}>
+                    x
+                  </span>
                   <button onClick={() => handleDeleteQuestion(question.id)}>
                     Deletar
-                  </button>
-                  <button onClick={() => setIsQuestionIdModalOpen(undefined)}>
-                    Fechar
                   </button>
                 </Modal>
               </Fragment>
